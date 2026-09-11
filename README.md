@@ -1,2 +1,2 @@
-# Trabalho-de-Algebrta
+# Trabalho-de-Algebra
 Uma calculadora de Matriz e Vetores

@@ -10,9 +10,9 @@ public class Matrix {
 
     /*
       Construtor da classe Matrix.
-      @param rows Número de linhas.
-      @param cols Número de colunas.
-      @param elements Array com todos os elementos da matriz.
+		rows Número de linhas.
+		cols Número de colunas.
+		elements Array com todos os elementos da matriz.
     */
     public Matrix(int rows, int cols, float[] elements) {
         // Valida se o total de elementos corresponde a linhas * colunas

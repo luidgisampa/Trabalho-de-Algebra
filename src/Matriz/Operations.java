@@ -41,7 +41,7 @@ public class Operations {
         if (a.getRows() != b.getRows() || a.getCols() != b.getCols()) {
             throw new IllegalArgumentException("Matrizes precisam ter a mesma dimensão para a soma.");
         }
-        
+
         float[] resultElements = new float[a.getRows() * a.getCols()];
         Matrix result = new Matrix(a.getRows(), a.getCols(), resultElements);
 
@@ -61,11 +61,34 @@ public class Operations {
         if (a.getDim() != b.getDim()) {
             throw new IllegalArgumentException("Vetores precisam ter a mesma dimensão para a soma.");
         }
-        
+
         float[] resultElements = new float[a.getDim()];
         for (int i = 0; i < a.getDim(); i++) {
             resultElements[i] = a.get(i) + b.get(i);
         }
         return new Vector(a.getDim(), resultElements);
+    }
+
+
+    /*
+      Multiplica uma matriz (m x n) por um vetor coluna de dimensão n.
+      O resultado é um vetor de dimensão m.
+    */
+    public static Vector multiply(Matrix matrix, Vector vector) {
+        // Validação: colunas da matriz precisam ser iguais à dimensão do vetor
+        if (matrix.getCols() != vector.getDim()) {
+            throw new IllegalArgumentException(
+                "O número de colunas da matriz deve ser igual à dimensão do vetor.");
+        }
+
+        float[] resultElements = new float[matrix.getRows()];
+        for (int i = 0; i < matrix.getRows(); i++) {
+            float sum = 0;
+            for (int j = 0; j < matrix.getCols(); j++) {
+                sum += matrix.get(i, j) * vector.get(j);
+            }
+            resultElements[i] = sum;
+        }
+        return new Vector(matrix.getRows(), resultElements);
     }
 }

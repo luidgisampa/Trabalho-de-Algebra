@@ -9,7 +9,6 @@ import Matriz.Vector3D;
 public class Transformations {
 
     // ==================== TRANSLACAO ====================
-    // TODO: Colega responsável pela Translação
 
     public Vector2D translate2D(Vector2D vector, double dx, double dy) {
         // 1. Converter vector.toHomogeneous()

@@ -1,12 +1,12 @@
 package LinearTransformations;
 
 import Matriz.Vector2D;
+import Matriz.Vector3D;
 
 import java.util.Scanner;
 
 /*
   Menu principal das Transformações Lineares.
-  Cada transformação tem o seu próprio método (runTranslation, runRotation, ...),
 */
 
 public class Main {
@@ -38,27 +38,255 @@ public class Main {
     }
 
     // ==================== TRANSLACAO ====================
-    // Pedir dimensões (2D ou 3D), criar vetor, pedir dx/dy/dz, chamar método e imprimir
+    // Menu de tranlacao
     private static void runTranslation() {
-        System.out.println("Translação ainda não implementada no Main");
+        //cabecalho 
+        System.out.println("=== Translação ===");
+        System.out.println("1 - 2D");
+        System.out.println("2 - 3D");
+        System.out.print("Escolha a dimensão: ");
+        int dimension = scanner.nextInt();
+
+        if (dimension == 1) {
+            //vetor 2d
+            System.out.print("Digite x do vetor: ");
+            double x = scanner.nextDouble();
+            System.out.print("Digite y do vetor: ");
+            double y = scanner.nextDouble();
+            System.out.print("Digite dx: ");
+            double dx = scanner.nextDouble();
+            System.out.print("Digite dy: ");
+            double dy = scanner.nextDouble();
+
+            Vector2D result = transform.translate2D(Vector2D.of(x, y), dx, dy);
+            System.out.println("Resultado: " + result);
+
+        } else if (dimension == 2) {
+            //vetor 3d
+            System.out.print("Digite x do vetor: ");
+            double x = scanner.nextDouble();
+            System.out.print("Digite y do vetor: ");
+            double y = scanner.nextDouble();
+            System.out.print("Digite z do vetor: ");
+            double z = scanner.nextDouble();
+            System.out.print("Digite dx: ");
+            double dx = scanner.nextDouble();
+            System.out.print("Digite dy: ");
+            double dy = scanner.nextDouble();
+            System.out.print("Digite dz: ");
+            double dz = scanner.nextDouble();
+
+            Vector3D result = transform.translate3D(Vector3D.of(x, y, z), dx, dy, dz);
+            System.out.println("Resultado: " + result);
+
+        } else {
+            System.out.println("Opção inválida");
+        }
     }
 
     // ==================== ROTACAO ====================
-    // Menu de rotação (2D ou 3D + eixo)
-    private static void runRotation() {
-        System.out.println("Rotação ainda não implementada no Main");
+    // Menu de rotação 
+    private static void runRotation() { 
+        System.out.println("=== Rotação ===");
+        System.out.println("1 - 2D");
+        System.out.println("2 - 3D");
+        System.out.print("Escolha a dimensão: ");
+        int dimension = scanner.nextInt();
+
+        if (dimension == 1) {
+            //como o vetor gira em torno da origem e preciso apenas do x, y e do ângulo
+            System.out.print("Digite x do vetor: ");
+            double x = scanner.nextDouble();
+            System.out.print("Digite y do vetor: ");
+            double y = scanner.nextDouble();
+            System.out.print("Digite o ângulo (em graus): ");
+            double angle = scanner.nextDouble();
+
+            Vector2D result = transform.rotation2D(Vector2D.of(x, y), angle);
+            System.out.println("Resultado: " + result);
+
+        } else if (dimension == 2) {
+            //antes de tudo e escolhido o eixo de rotacão
+            System.out.println("1 - Eixo X");
+            System.out.println("2 - Eixo Y");
+            System.out.println("3 - Eixo Z");
+            System.out.print("Escolha o eixo: ");
+            //esse axis sera ultilizado mais tarde no switch case
+            int axis = scanner.nextInt();
+            // leitores das 3 coordenadas do vetor
+            System.out.print("Digite x do vetor: ");
+            double x = scanner.nextDouble();
+            System.out.print("Digite y do vetor: ");
+            double y = scanner.nextDouble();
+            System.out.print("Digite z do vetor: ");
+            double z = scanner.nextDouble();
+            System.out.print("Digite o ângulo (em graus): ");
+            double angle = scanner.nextDouble();
+
+            Vector3D vector3D = Vector3D.of(x, y, z);
+            Vector3D result;
+            switch (axis) {
+                //o switch case que determina qual metodo ele deve chamar de acordo com o a rotacão escolhida
+                case 1 -> result = transform.rotation3DX(vector3D, angle);
+                case 2 -> result = transform.rotation3DY(vector3D, angle);
+                case 3 -> result = transform.rotation3DZ(vector3D, angle);
+                default -> {
+                    System.out.println("Eixo inválido");
+                    return;
+                }
+            }
+            System.out.println("Resultado: " + result);
+
+        } else {
+            System.out.println("Opção inválida");
+        }
     }
 
     // ==================== REFLEXAO ====================
-    // Menu de reflexão (2D ou 3D + eixo)
+    // Menu de reflexão 
     private static void runReflection() {
-        System.out.println("Reflexão ainda não implementada no Main");
+        System.out.println("=== Reflexão ===");
+        System.out.println("1 - 2D");
+        System.out.println("2 - 3D");
+        System.out.print("Escolha a dimensão: ");
+        int dimension = scanner.nextInt();
+
+        if (dimension == 1) {
+            //por ser em um plano 2d ultliza apenas X Y e o eixo de rotacao que no caso reflexão em relação ao eixo X (y vira -y) ou ao eixo Y (x vira -x)
+            System.out.println("1 - Eixo X");
+            System.out.println("2 - Eixo Y");
+            System.out.print("Escolha o eixo: ");
+            //esse axis sera ultilizado mais tarde no switch case
+            int axis = scanner.nextInt();
+            //leitores das coordenadas
+            System.out.print("Digite x do vetor: ");
+            double x = scanner.nextDouble();
+            System.out.print("Digite y do vetor: ");
+            double y = scanner.nextDouble();
+
+            Vector2D vector2D = Vector2D.of(x, y);
+            Vector2D result;
+            switch (axis) {
+                //o switch case que determina qual metodo ultilizar 
+                case 1 -> result = transform.reflection2DX(vector2D);
+                case 2 -> result = transform.reflection2DY(vector2D);
+                default -> {
+                    System.out.println("Eixo inválido");
+                    return;
+                }
+            }
+            System.out.println("Resultado: " + result);
+
+        } else if (dimension == 2) {
+            //por ser em um plano 3d ele pede o X Y Z e o eixo de rotacaox
+            // (X inverte o x e espelha no plano YZ, e assim por diante)
+            
+            System.out.println("1 - X (plano YZ)");
+            System.out.println("2 - Y (plano XZ)");
+            System.out.println("3 - Z (plano XY)");
+            System.out.print("Escolha o eixo: ");
+            int axis = scanner.nextInt();
+            //esse axis sera ultilizado mais tarde no switch case
+
+            //leitores das coordenadas 
+            System.out.print("Digite x do vetor: ");
+            double x = scanner.nextDouble();
+            System.out.print("Digite y do vetor: ");
+            double y = scanner.nextDouble();
+            System.out.print("Digite z do vetor: ");
+            double z = scanner.nextDouble();
+
+            Vector3D vector3D = Vector3D.of(x, y, z);
+            Vector3D result;
+            switch (axis) {
+                //switch case que determina qual metodo ultlizar 
+                case 1 -> result = transform.reflection3DX(vector3D);
+                case 2 -> result = transform.reflection3DY(vector3D);
+                case 3 -> result = transform.reflection3DZ(vector3D);
+                default -> {
+                    System.out.println("Eixo inválido");
+                    return;
+                }
+            }
+            System.out.println("Resultado: " + result);
+
+        } else {
+            System.out.println("Opção inválida");
+        }
     }
 
     // ==================== PROJECAO ====================
-    // Menu de projeção (2D ou 3D + eixo)
+    // Menu de projeção 
     private static void runProjection() {
-        System.out.println("Projeção ainda não implementada no Main");
+        System.out.println("=== Projeção ===");
+        System.out.println("1 - 2D");
+        System.out.println("2 - 3D");
+        System.out.print("Escolha a dimensão: ");
+        int dimension = scanner.nextInt();
+
+        if (dimension == 1) {
+            //a projeção por ser 2d precisa somente do X e Y. No caso sobre o eixo X (zera o y) ou sobre o eixo Y (zera o x)
+            System.out.println("1 - Eixo X");
+            System.out.println("2 - Eixo Y");
+            System.out.print("Escolha o eixo: ");
+            int axis = scanner.nextInt();
+            //esse axis sera ultilizado mais tarde no switch case
+
+            //leitores das coordenadas 
+            System.out.print("Digite x do vetor: ");
+            double x = scanner.nextDouble();
+            System.out.print("Digite y do vetor: ");
+            double y = scanner.nextDouble();
+
+            Vector2D vector2D = Vector2D.of(x, y);
+            Vector2D result;
+            switch (axis) {
+                //switch case que determina qual metodo ultlizar 
+                case 1 -> result = transform.projection2DX(vector2D);
+                case 2 -> result = transform.projection2DY(vector2D);
+                default -> {
+                    System.out.println("Eixo inválido");
+                    return;
+                }
+            }
+            System.out.println("Resultado: " + result);
+
+        } else if (dimension == 2) {
+            //por ser em um plano 3d pede X Y e Z 
+            //projeção sobre um plano (YZ zera o x, XZ zera o y, XY zera o z)
+            
+            System.out.println("1 - X (plano YZ)");
+            System.out.println("2 - Y (plano XZ)");
+            System.out.println("3 - Z (plano XY)");
+            System.out.print("Escolha o eixo: ");
+            int axis = scanner.nextInt();
+            //esse axis sera ultilizado mais tarde no switch case
+
+            //leitores das coordenadas 
+            System.out.print("Digite x do vetor: ");
+            double x = scanner.nextDouble();
+            System.out.print("Digite y do vetor: ");
+            double y = scanner.nextDouble();
+            System.out.print("Digite z do vetor: ");
+            double z = scanner.nextDouble();
+
+            Vector3D vector3D = Vector3D.of(x, y, z);
+            Vector3D result;
+            switch (axis) {
+                //switch case que determina qual metodo ultlizar
+                case 1 -> result = transform.projection3DX(vector3D);
+                case 2 -> result = transform.projection3DY(vector3D);
+                case 3 -> result = transform.projection3DZ(vector3D);
+                default -> {
+                    System.out.println("Eixo inválido");
+                    return;
+                }
+            }
+            System.out.println("Resultado: " + result);
+
+        } else {
+            System.out.println("Opção inválida");
+        }
     }
 
     // ==================== CISALHAMENTO ====================
